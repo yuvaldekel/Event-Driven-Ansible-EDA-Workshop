@@ -1,11 +1,11 @@
-# Event-Driven-Ansible-EDA-Workshop
-1 Day hands-on workshop built &amp; delivered by Tommer Amber
-
 # 1-Day Hands-On Workshop: Event-Driven Ansible for OpenShift
 
-**Instructor:** Tommer Amber, Red Hat Architect
+**Instructor:** Tommer Amber, Red Hat Managing Architect
+
 **Duration:** 1 Day
+
 **Audience:** OpenShift Administrators, Automation Engineers, SREs.
+
 **Prerequisites:**
 * Familiarity with Ansible Playbooks, Inventories, and Job Templates.
 * Basic understanding of OpenShift and `oc` CLI concepts.
