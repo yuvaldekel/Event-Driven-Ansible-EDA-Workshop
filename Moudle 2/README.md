@@ -107,46 +107,43 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         git push
         ```
 
-### 2.2 Exercise: Creating a Lean Decision Environment
-0. **Create Pull Secret file for Red Hat registries authentication** and copy it to the default location `podman` looks for
-    * Access [https://console.redhat.com/openshift/install/pull-secret](https://console.redhat.com/openshift/install/pull-secret)
-    * Run:
-      ```bash
-      cp ~/Downloads/pull-secret.txt ~/.docker/config.json
-      # OR - if you run the upcoming commands with root
-      sudo mkdir /root/.docker
-      sudo cp ~/Downloads/pull-secret.txt /root/.docker/config.json
+### 2.2 Exercise: Using a Pre-built Decision Environment
 
-      # Try sudo if not working
-      podman login registry.redhat.io --authfile ~/.docker/config.json 
-      podman login quay.io --authfile ~/.docker/config.json 
-      ```
-1.  **Create `requirements.yml` and `execution-environment.yml` files** in the root of your Git repo with the content below.
-    * `requirements.yml`:
-        ```yaml
-        ---
-        collections:
-          - ansible.eda
+For this workshop, we'll use a **pre-built decision environment** that Red Hat provides, which already includes all the necessary components for Event-Driven Ansible.
+
+1.  **Use the Red Hat Supported Decision Environment:**
+    * We will use the following pre-built image:
         ```
-    * `execution-environment.yml`:
-        ```yaml
-        ---
-        version: 1
-        build_arg_defaults:
-          EE_BASE_IMAGE: 'registry.redhat.io/ansible-automation-platform-25/de-minimal-rhel8:latest'
-        dependencies:
-          galaxy: requirements.yml
+        registry.redhat.io/ansible-automation-platform-25/de-supported-rhel9
+        ```
+    * **Why this approach?** This image already includes:
+        - The `ansible.eda` collection and all its dependencies
+        - All required Python packages for Event-Driven Ansible
+        - A certified, supported runtime environment
+        - Regular security updates from Red Hat
+    * **This is all that's required for our workshop scenario** - no custom building needed!
+
+2.  **When to Build Custom Decision Environments:**
+    * The pre-built image works perfectly for most Event-Driven Ansible use cases
+    * You may want to build custom decision environments when you need:
+        - Additional Ansible collections beyond `ansible.eda`
+        - Custom Python packages or dependencies
+        - Specific versions of collections for compatibility
+        - Custom scripts or tools in your automation environment
+
+3.  **Building Advanced Decision Environments (Optional):**
+    * If you want to explore building custom decision environments, you can use `ansible-builder`
+    * **Reference Documentation:**
+        - [Ansible Builder Documentation](https://ansible-builder.readthedocs.io/)
+        - [Red Hat AAP Decision Environment Guide](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/creating_and_using_execution_environments/index)
+    * **Basic example** for custom builds:
+        ```bash
+        # Create requirements.yml with your collections
+        # Create execution-environment.yml with your config
+        ansible-builder build -f execution-environment.yml -t your-registry/custom-eda-de:latest
         ```
 
-2.  **Build and Push the DE Image:**
-    * Use `ansible-builder` to build the image:
-        ```bash
-        ansible-builder build -f execution-environment.yml -t quay.io/<your-username>/eda-de:latest # try sudo if not working
-        ```
-    * Push the image:
-        ```bash
-        podman push quay.io/<your-username>/eda-de:latest
-        ```
+**For this workshop, we'll proceed with the supported Red Hat image** - it provides everything we need for our OpenShift node remediation scenario!
 
 ### 2.3 Exercise: Writing the Rulebook
 
