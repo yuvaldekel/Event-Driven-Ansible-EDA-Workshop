@@ -9,3 +9,8 @@ This issue occurs roughly once a day. The customer's SRE team knows how to detec
 
 The goal of this workshop is to use Event-Driven Ansible to fully automate the solution, replacing the need for an SRE team member to manually detect the alert and reboot the affected node.
 
+<img width="682" height="262" alt="Screenshot From 2025-08-17 11-48-40" src="https://github.com/user-attachments/assets/6dfcb955-52ab-45a7-920b-44c7c84fecf6" />
+
+<img width="896" height="377" alt="Screenshot From 2025-08-17 12-01-33" src="https://github.com/user-attachments/assets/71d45d8b-e73e-4c82-bc43-e6f779de4ff0" />
+
+<img width="631" height="579" alt="Screenshot From 2025-08-17 12-03-32" src="https://github.com/user-attachments/assets/a4b8464b-e58c-497d-9544-612a03090c4a" />
