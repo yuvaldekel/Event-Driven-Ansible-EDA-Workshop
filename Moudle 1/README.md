@@ -20,3 +20,31 @@ Event-Driven Ansible (EDA) is a component of the Ansible Automation Platform tha
 
 * **Event Sources:** These are plugins that connect EDA to external event producers. EDA can listen to a wide variety of sources, including Kafka, webhooks, and, as we'll see today, Prometheus Alertmanager. The `ansible.eda.alertmanager` source plugin allows our rulebook to receive alerts directly from OpenShift's built-in monitoring.
 
+### 1.2 Exercise: Create Project & Install Operator
+
+1.  **Log in to the OpenShift Cluster and create an aap Namespace** with a cluster-admin user.
+```
+OCP_URL=""
+ADMIN_PASSWORD=""
+oc login -u admin -p ${ADMIN_PASSWORD} ${OCP_URL}
+oc create ns aap
+```
+2. **Install the AAP Operator (2.5 cluster scoped)** from the Openshift UI
+
+    1. `OperatorHub` -> `Ansible Automation Platform`
+    2. `Channel` == `stable-2.5-cluster-scoped`
+    3. Press `Install`
+    4. `Installed namespace` = `Operator recommended Namespace: aap`
+    5. Create new `AnsibleAutomationPlatform` object (use default settings)
+    6. Navigate to `Workloads` => `Pods` and wait for all pods to run successfully (10min +/-)
+    7. Once they are all up - make sure you see 3 routes:
+        * **main aap instance route**
+        * **controller route**
+        * **eda route**
+        * **hub route**
+    8. Press the main aap instance route
+        * Username: admin
+        * Password: from `<aap-instance>-admin-password`
+      
+<img width="806" height="909" alt="image" src="https://github.com/user-attachments/assets/9e852a34-f638-4a2e-a7b2-59a96340ee25" />
+
