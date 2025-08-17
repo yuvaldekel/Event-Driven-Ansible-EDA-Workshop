@@ -12,7 +12,6 @@
 * `oc` and `ansible-builder` command-line tools installed on your local machine.
 * A personal GitHub account.
 * A user account on Quay.io (or another container registry) to store the Decision Environment image.
-* Familiarity with Ansible Playbooks, Inventories, and Job Templates.
 
 ## Initial Lab Setup: Forking the Workshop Repository
 
