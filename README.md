@@ -18,7 +18,7 @@
 Before we begin, you need to get a personal copy of the workshop's source code. This involves forking the main repository and then cloning your fork to your local machine. This ensures you have your own version of the code to modify and use with your AAP instance.
 
 1.  **Fork the Workshop Repository:**
-    * Navigate to the main workshop repository URL: `https://github.com/tommeramber/eda-openshift-workshop`
+    * Navigate to the main workshop repository URL: `https://github.com/rhilconsultants/Event-Driven-Ansible-EDA-Workshop`
     * Click the **"Fork"** button in the top-right corner of the page.
     * When prompted, select your personal GitHub account as the destination for the fork. This will create a copy of the repository under your account (`https://github.com/YOUR_USERNAME/eda-openshift-workshop`).
 
@@ -27,7 +27,7 @@ Before we begin, you need to get a personal copy of the workshop's source code. 
     * Ensure the "HTTPS" tab is selected, and copy the URL.
     * Open a terminal on your local machine and run the following command, replacing the URL with the one you just copied:
         ```bash
-        git clone [https://github.com/YOUR_USERNAME/eda-openshift-workshop.git](https://github.com/YOUR_USERNAME/eda-openshift-workshop.git)
+        git clone https://github.com/YOUR_USERNAME/eda-openshift-workshop.git
         ```
 
 3.  **Navigate into the Repository Directory:**
