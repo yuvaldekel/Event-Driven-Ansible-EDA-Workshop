@@ -108,7 +108,19 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         ```
 
 ### 2.2 Exercise: Creating a Lean Decision Environment
+0. **Create Pull Secret file for Red Hat registries authentication** and copy it to the default location `podman` looks for
+    * Access [https://console.redhat.com/openshift/install/pull-secret](https://console.redhat.com/openshift/install/pull-secret)
+    * Run:
+      ```bash
+      cp ~/Downloads/pull-secret.txt ~/.docker/config.json
+      # OR - if you run the upcoming commands with root
+      sudo mkdir /root/.docker
+      sudo cp ~/Downloads/pull-secret.txt /root/.docker/config.json
 
+      # Try sudo if not working
+      podman login registry.redhat.io --authfile ~/.docker/config.json 
+      podman login quay.io --authfile ~/.docker/config.json 
+      ```
 1.  **Create `requirements.yml` and `execution-environment.yml` files** in the root of your Git repo with the content below.
     * `requirements.yml`:
         ```yaml
@@ -121,7 +133,7 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         ---
         version: 1
         build_arg_defaults:
-          EE_BASE_IMAGE: 'registry.redhat.io/ansible-automation-platform-2.4/de-minimal-rhel8:latest'
+          EE_BASE_IMAGE: 'registry.redhat.io/ansible-automation-platform-25/de-minimal-rhel8:latest'
         dependencies:
           galaxy: requirements.yml
         ```
@@ -129,15 +141,11 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
 2.  **Build and Push the DE Image:**
     * Use `ansible-builder` to build the image:
         ```bash
-        ansible-builder build -f execution-environment.yml -t quay.io/your-username/eda-de:latest
-        ```
-    * Log in to your image registry:
-        ```bash
-        podman login quay.io
+        ansible-builder build -f execution-environment.yml -t quay.io/<your-username>/eda-de:latest # try sudo if not working
         ```
     * Push the image:
         ```bash
-        podman push quay.io/your-username/eda-de:latest
+        podman push quay.io/<your-username>/eda-de:latest
         ```
 
 ### 2.3 Exercise: Writing the Rulebook
