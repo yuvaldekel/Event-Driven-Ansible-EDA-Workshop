@@ -51,7 +51,7 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         ```
     The output is the `sha256~...` token. Copy this and paste it into the corresponding `vars/dev.yml` or `vars/prd.yml` file.
 
-4.  **Create the OpenShift Route manifest:**
+4.  **Create the OpenShift Route manifest + the PrometheusRule for testing:**
     * Create a new file at `extensions/eda/k8s-objects/eda-route.yml` and add the following content. **Replace `<aap-namespace>` with the actual namespace where your AAP instance is installed.**
         ```yaml
         apiVersion: route.openshift.io/v1
@@ -73,6 +73,35 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         * `namespace`: The Route must be in the same namespace as the Service it exposes. Since the Rulebook Activation service will be created in your AAP namespace, the Route must be there as well.
         * `name: alertmanager-listener`: This must **exactly match** the name of the Rulebook Activation you will create later, as EDA uses that name to create the corresponding Service.
         * `tls: { termination: edge, insecureEdgeTerminationPolicy: Redirect }`: This is a critical security configuration. It tells the OpenShift router to terminate TLS (HTTPS) at the edge of the cluster. Any external, unencrypted HTTP traffic will be automatically redirected to HTTPS. This ensures that the alert data sent from Alertmanager is encrypted as it travels over the network to your cluster, protecting it from snooping.
+
+    * **Create a Test PrometheusRule for Workshop Demonstration:**
+        * Create a new file at `extensions/eda/k8s-objects/test-prometheus-rule.yml` and add the following content. **Replace `<worker-name>` with an actual worker node name from your cluster.**
+        ```yaml
+        ---
+        apiVersion: monitoring.coreos.com/v1
+        kind: PrometheusRule
+        metadata:
+          name: dummy-prometheus-rule
+          namespace: openshift-monitoring
+        spec:
+          groups:
+          - name: dummy-prometheus-rule
+            rules:
+            - alert: NodeHealthCheckFailed
+              annotations:
+                summary: event driven poc
+              expr: |
+                max(node_disk_info{instance=~"<worker-name>"}) by(instance)
+              for: 10s
+              labels:
+                severity: custom
+        ```
+
+    * **Important Note about the Test PrometheusRule**: This is a **dummy PrometheusRule designed for workshop testing purposes only**. It will trigger alerts almost instantly when applied, allowing you to quickly test your Event-Driven Ansible setup without waiting for real infrastructure issues.
+        * The `node_disk_info` metric is always available, so these alerts will fire immediately
+        * The `for: 10s` duration means alerts become active after just 10 seconds
+        * This allows rapid iteration and testing of your EDA rulebook conditions and remediation workflows
+        * **For production scenarios**, refer to the real-world PrometheusRules and monitoring jobs described in the **Appendix** section below
 
 5.  **Create the Rebooter Pod Template:**
     * Create a new file at `templates/reboot_node_pod.yaml.j2` and add the following content:
@@ -247,3 +276,31 @@ For this workshop, we'll use a **pre-built decision environment** that Red Hat p
         git commit -m "Add EDA rulebook and remediation playbook"
         git push
         ```
+
+## Appendix: Production-Ready Monitoring Components
+
+This workshop uses simplified test alerts for demonstration purposes. For real-world implementations of node health monitoring and NFS stale detection, refer to these production-ready components:
+
+### Real PrometheusRules
+
+Comprehensive PrometheusRules for production node health monitoring:
+- **Source**: [EDA-Real-PrometheusRules.yaml](https://gist.githubusercontent.com/tommeramber/b9208bfe558f8119bd897c63a599ef9c/raw/4756e02c6b6f575ffac20ff9bdc2b5a61b58c6e9/EDA-Real-PrometheusRules.yaml)
+- Includes rules for:
+  - PVC over-utilization detection
+  - Node health check job completion monitoring
+  - NFS stale mount detection
+
+### Monitoring CronJobs
+
+Automated health check jobs that generate the alerts monitored by the PrometheusRules:
+- **Source**: [EDA-CronJobs.yaml](https://gist.githubusercontent.com/tommeramber/08ad6ac3af85face1982aa9a3526bbc9/raw/727c726e442089fed0c1c4e2c235e16f12a93b92/EDA-CronJobs.yaml)
+- Includes:
+  - `detect-nfs-stale`: Periodic NFS mount health checks
+  - `node-health-check`: Comprehensive node health validation
+
+### Additional Resources
+
+For a detailed technical deep-dive into the concepts and implementation patterns used in this workshop:
+- **Article**: ["Optimizing Cloud Native Operations Series - Part 3: About the Rulebook"](https://medium.com/@tamber/optimizing-cloud-native-operations-series-part-3-about-the-rulebook-d57d828254da)
+
+These resources provide the foundation for implementing robust, production-ready Event-Driven Ansible solutions in enterprise OpenShift environments.
