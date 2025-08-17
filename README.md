@@ -20,20 +20,20 @@ Before we begin, you need to get a personal copy of the workshop's source code. 
 1.  **Fork the Workshop Repository:**
     * Navigate to the main workshop repository URL: `https://github.com/rhilconsultants/Event-Driven-Ansible-EDA-Workshop`
     * Click the **"Fork"** button in the top-right corner of the page.
-    * When prompted, select your personal GitHub account as the destination for the fork. This will create a copy of the repository under your account (`https://github.com/YOUR_USERNAME/eda-openshift-workshop`).
+    * When prompted, select your personal GitHub account as the destination for the fork. This will create a copy of the repository under your account.
 
 2.  **Clone Your Forked Repository:**
     * On your personal fork's GitHub page, click the green **"< > Code"** button.
     * Ensure the "HTTPS" tab is selected, and copy the URL.
     * Open a terminal on your local machine and run the following command, replacing the URL with the one you just copied:
         ```bash
-        git clone https://github.com/YOUR_USERNAME/eda-openshift-workshop.git
+        git clone https://github.com/YOUR_USERNAME/Event-Driven-Ansible-EDA-Workshop.git
         ```
 
 3.  **Navigate into the Repository Directory:**
     * Once the clone is complete, move into the new directory:
         ```bash
-        cd eda-openshift-workshop
+        cd Event-Driven-Ansible-EDA-Workshop
         ```
 
 You now have a local copy of all the necessary playbooks, rulebooks, and templates, and it's linked to your personal GitHub repository. You are ready to begin the workshop exercises.
