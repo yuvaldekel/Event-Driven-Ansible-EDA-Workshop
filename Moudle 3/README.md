@@ -6,7 +6,9 @@
     * **Image Registry Credential:**
         * Name: `Quay Credential`
         * Type: `Container Registry`
-        * URL: `quay.io`
+        * URL: `registry.redhat.io` #from which we will pull the DE image
+        * usename: ??????????
+        * token: ?????????
     * **AAP Controller Credential:**
         * Name: `AAP Controller Credential`
         * Type: `Controller`
@@ -29,13 +31,30 @@
 3.  Point to your forked Git repository URL and select your Git credential.
 4.  Click `Save` and wait for the project to sync.
 
-### 3.3 Exercise: Creating the Rulebook Activation
+### 3.3 Exercise: Referencing the Decision Environment
+
+Before creating the Rulebook Activation, you need to configure the Decision Environment that will execute your Event-Driven Ansible rulebooks.
+
+1.  **Navigate to Decision Environments in AAP:**
+    * In the AAP UI, go to **Administration** → **Execution Environments**
+    * Click **Add** to create a new execution environment
+
+2.  **Configure the Red Hat Decision Environment:**
+    * **Name**: `EDA Decision Environment`
+    * **Image**: `registry.redhat.io/ansible-automation-platform-25/de-supported-rhel9`
+    * **Description**: `Red Hat supported Decision Environment for Event-Driven Ansible`
+    * **Pull Policy**: `Always` (recommended for production)
+    * **Credential**: Reference the `Image Registry Credential` we've generated in step `3.1`
+
+**Important**: This decision environment will be used in the next section when creating your Rulebook Activation.
+
+### 3.4 Exercise: Creating the Rulebook Activation
 
 1.  Go to `Rulebook Activations` -> `Create rulebook activation`.
 2.  Name: `alertmanager-listener`
 3.  Project: `OpenShift Alerting Project`.
 4.  Rulebook: `extensions/eda/rulebooks/rulebook.yml`.
-5.  Decision Environment: Select the `eda-de` image from your registry.
+5.  Decision Environment: Select `EDA Decision Environment` (the Red Hat pre-built image configured in the previous section).
 6.  Click `Create rulebook activation`.
 7.  **Apply the Route:**
     * Now that the activation has created the `alertmanager-listener` service, apply the route manifest you created earlier.
