@@ -18,13 +18,13 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
     * Using your text editor, create a new file at `vars/prd.yml` and add the following content, replacing the values with your **production** cluster details:
         ```yaml
         ---
-        openshift_api: "[https://api.your-prd-cluster.com:6443](https://api.your-prd-cluster.com:6443)"
+        openshift_api: "https://api.your-prd-cluster.com:6443"
         openshift_token: "sha256~your-prd-token"
         ```
     * Create another file at `vars/dev.yml` with your **development** cluster details:
         ```yaml
         ---
-        openshift_api: "[https://api.your-dev-cluster.com:6443](https://api.your-dev-cluster.com:6443)"
+        openshift_api: "https://api.your-dev-cluster.com:6443"
         openshift_token: "sha256~your-dev-token"
         ```
     * **Explanation**: The remediation playbook will dynamically load one of these files based on an `env` label in the incoming alert.
