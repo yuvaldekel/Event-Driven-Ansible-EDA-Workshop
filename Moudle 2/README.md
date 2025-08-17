@@ -5,7 +5,7 @@
 A well-organized Git repository is crucial for a scalable and maintainable automation project. EDA and AAP expect a certain structure to locate all the necessary components like rulebooks, playbooks, and variables.
 
 1.  **Create the required directories:**
-    * In your cloned `eda-openshift-workshop` directory, run the following commands to create the structure:
+    * In your cloned `Event-Driven-Ansible-EDA-Workshop` directory, run the following commands to create the structure:
         ```bash
         mkdir -p extensions/eda/k8s-objects
         mkdir -p extensions/eda/playbooks
