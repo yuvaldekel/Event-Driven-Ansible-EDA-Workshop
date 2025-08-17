@@ -1,6 +1,6 @@
 # 1-Day Workshop: Mastering Event-Driven Ansible with OpenShift
 
-**Instructor:** Tommer Amber, Red Hat Architect
+**Instructor:** Tommer Amber, Red Hat Managing Architect
 
 **Audience:** OpenShift and Ansible administrators familiar with Ansible Automation Platform (AAP) but new to Event-Driven Ansible (EDA).
 
