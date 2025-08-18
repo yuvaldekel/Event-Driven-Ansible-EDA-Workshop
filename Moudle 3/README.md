@@ -49,7 +49,8 @@ Before configuring credentials in AAP, you need to create a Personal Access Toke
 1.  Go to `Projects` -> `Create project`.
 2.  Name: `OpenShift Alerting Project`.
 3.  Point to your forked Git repository URL and select the `GitHub Credential` you created in section 3.1.
-4.  Click `Save` and wait for the project to sync.
+4.  Source Control branch: `main`.
+5.  Click `Save` and wait for the project to sync.
 
 ### 3.3 Exercise: Referencing the Decision Environment
 
@@ -75,19 +76,42 @@ Before creating the Rulebook Activation, you need to configure the Decision Envi
 3.  Project: `OpenShift Alerting Project`.
 4.  Rulebook: `extensions/eda/rulebooks/rulebook.yml`.
 5.  Decision Environment: Select `EDA Decision Environment` (the Red Hat pre-built image configured in the previous section).
-6.  Click `Create rulebook activation`.
-7.  **Apply the Route:**
+6.  Log Level: `Error`.
+7.  Service Name: `alertmanager-listener`. #Same as the one we configured in the Route.
+8.  Credential: `AAP Controller Credential`.
+9.  Rulebook activation enabled? `Marked V`.
+10.  Click `Create rulebook activation`.
+11.  **Apply the Route:**
     * Now that the activation has created the `alertmanager-listener` service, apply the route manifest you created earlier.
         ```bash
         # Make sure you are in your local workshop repo directory
         oc apply -f extensions/eda/k8s-objects/eda-route.yml
         ```
-8.  **Get the Webhook URL:**
+12.  **Get the Webhook URL:**
     * Find the exposed URL for the webhook. This is the endpoint you'll give to Alertmanager.
         ```bash
-        oc get route alertmanager-listener -n <aap-namespace> -o jsonpath='{.spec.host}'
+        ROUTE=`oc get route alertmanager-listener -n <aap-namespace> -o jsonpath='{.spec.host}'`
+        echo https://$ROUTE
         ```
-    * Your full webhook URL will be `https://<route-hostname-from-above>/api/eda/v1/alerts`. Note that we use **https** now because of the edge termination.
+    
+      * Your full webhook URL will be `https://<route-hostname-from-above>/alerts`. Note that we use **https** now because of the edge termination.
+13.  **Testing**
+    * Run the following `CURL` command to check for the validity of the rulebook.
+      ```bash
+      curl -x POST https://$ROUTE/alerts \
+      -H 'Content-Type: application/json' \
+      -d '{"alerts": 
+            [
+              {"annotations": {"description": "Workshop!!"},
+               "labels": {"alertname": "test",
+                          "env": "test",
+                          "severity: "critical"},
+                "status": "firing"
+              }
+            ]
+          }
+      ```
+     * See in the rulebook activation history the data of your CURL command.
 
 ## Module 3 - Part 2: Configuring AAP
 
@@ -147,10 +171,14 @@ Before creating the Rulebook Activation, you need to configure the Decision Envi
 3.  Point to your forked Git repository URL and select your Git credential.
 4.  Click `Save` and wait for the project to sync.
 
-### 3.6 Exercise: Creating a project template in AAP
+### 3.7 Exercise: Creating a project template in AAP
 
-1.  Go to `Authentication Execution` -> 
-2.  Name: 
-3.  Point to your forked Git repository URL and select your Git credential.
-4.  Point to the OCP credential we created earlier
-4.  Click `Save`
+1.  Go to `Authentication Execution` -> `Templates` -> `Create New`
+2.  Name: `reboot-problematic-node` # Same as referenced in the `run_job_template` in the rulebook
+3.  Inventory: `Demo Inventory` # Irrelevant because we are using `oc login` + `ocp api` as access method to our remote cluster based on the `env` from the alert
+4.  Credentials: `OCP Login Creds` # from 3.5. step 2
+5.  Project: `Openshift Automations`
+6.  Job Type: `Run`
+7.  Playbook: `playbooks/drain_and_reboot_node.yaml`
+8.  `Extra variables` -> `Prompt on launch` -> `Mark V` # A MUST !!! so the `vars_prompt` section in the playbook will work
+9.  Click `Save`

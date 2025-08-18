@@ -193,7 +193,7 @@ For this workshop, we'll use a **pre-built decision environment** that Red Hat p
             event.alert.labels.env is defined
           actions:
             - run_job_template:
-                name: "Drain and Reboot Unhealthy Node"
+                name: reboot-problematic-node
                 organization: "Default"
                 job_args:
                   extra_vars:
