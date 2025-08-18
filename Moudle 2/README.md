@@ -18,17 +18,17 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
     * Using your text editor, create a new file at `vars/prd.yml` and add the following content, replacing the values with your **production** cluster details:
         ```yaml
         ---
-        openshift_api: "https://api.your-prd-cluster.com:6443"
-        openshift_token: "sha256~your-prd-token"
+        openshift_api: "{{ lookup('env', 'PRD_OCP_API') }}"
+        openshift_token: "{{ lookup('env', 'PRD_OCP_AUTH_TOKEN') }}"
         ```
     * Create another file at `vars/dev.yml` with your **development** cluster details:
         ```yaml
         ---
-        openshift_api: "https://api.your-dev-cluster.com:6443"
-        openshift_token: "sha256~your-dev-token"
+        openshift_api: "{{ lookup('env', 'DEV_OCP_API') }}"
+        openshift_token: "{{ lookup('env', 'DEV_OCP_AUTH_TOKEN') }}"
         ```
     * **Explanation**: The remediation playbook will dynamically load one of these files based on an `env` label in the incoming alert.
-    * **Security Best Practice:** Storing plain-text tokens directly in a Git repository is a significant security risk. We are doing this now for simplicity. In a later module, we will replace this with a secure reference to an Ansible Automation Platform credential.
+    * **Security Best Practice:** Storing plain-text tokens directly in a Git repository is a significant security risk, and thus we are not doing this. We are relying on the Ansible Automation Platform credential that holds that information, that will be injected into the var file at runtime, and the playbook will use this variables at runtime as well.
 
 3.  **How to Generate the `openshift_token`**
 
@@ -49,8 +49,8 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         ```bash
         oc create token aap-eda-sa -n openshift-monitoring
         ```
-    The output is the `sha256~...` token. Copy this and paste it into the corresponding `vars/dev.yml` or `vars/prd.yml` file.
-
+    The output is a `sha256~...` token. Copy it and save it in a file for a later use in the next moudle.
+    
 4.  **Create the OpenShift Route manifest + the PrometheusRule for testing:**
     * Create a new file at `extensions/eda/k8s-objects/eda-route.yml` and add the following content. **Replace `<aap-namespace>` with the actual namespace where your AAP instance is installed.**
         ```yaml
@@ -143,7 +143,7 @@ For this workshop, we'll use a **pre-built decision environment** that Red Hat p
 1.  **Use the Red Hat Supported Decision Environment:**
     * We will use the following pre-built image:
         ```
-        registry.redhat.io/ansible-automation-platform-25/de-supported-rhel9
+        registry.redhat.io/ansible-automation-platform-25/de-supported-rhel9:latest
         ```
     * **Why this approach?** This image already includes:
         - The `ansible.eda` collection and all its dependencies
