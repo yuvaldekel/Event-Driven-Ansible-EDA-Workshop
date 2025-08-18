@@ -22,11 +22,23 @@
 
 ### 4.2 Exercise: Configuring OpenShift Alertmanager
 
-1.  **Edit the Alertmanager configuration:**
-    ```bash
-    oc -n openshift-monitoring edit configmap alertmanager-main
-    ```
-2.  **Add a new receiver and route** pointing to the webhook URL from step 3.3.
+1.  From the OCP UI -> `Administration` -> `Cluster Settings` -> `Configuration` -> `AlertManager`
+2.  **Add a new receiver and route** pointing to the webhook URL from step 3.3:
+     ```yaml
+     ...
+     receivers:
+     - name: EDA
+       webhook_configs:
+       - url: "https://<echo $ROUTE>/alerts"
+         send_resolved: false
+     ...
+     route:
+       routes:
+         - reciever: EDA
+           match_re:
+             severity: custom
+           continue: true
+     ```
 
 ### 4.3 Exercise: Generating a Test Alert
 
