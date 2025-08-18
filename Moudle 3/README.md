@@ -1,5 +1,28 @@
 ## Module 3 - Part 1: Configuring EDA
 
+### 3.0 Exercise: Creating GitHub Personal Access Token
+
+Before configuring credentials in AAP, you need to create a Personal Access Token (PAT) for GitHub authentication.
+
+1.  **Generate GitHub Personal Access Token:**
+    * Log in to your GitHub account
+    * Navigate to **Settings** → **Developer settings** → **Personal access tokens** → **Tokens (classic)**
+    * Click **Generate new token** → **Generate new token (classic)**
+    * Configure the token:
+        * **Note**: `AAP EDA Workshop Token`
+        * **Expiration**: `30 days` (or as per your security policy)
+        * **Select scopes**: Check the following permissions:
+            - `repo` (Full control of private repositories)
+            - `workflow` (Update GitHub Action workflows)
+    * Click **Generate token**
+    * **IMPORTANT**: Copy the token immediately and store it securely - you won't be able to see it again!
+
+2.  **Record Your Credentials:**
+    * **GitHub Username**: Your GitHub username (e.g., `your-username`)
+    * **GitHub Token**: The personal access token you just generated (starts with `ghp_...`)
+
+**Security Note**: Personal access tokens provide the same level of access as passwords but are more secure because they can be limited in scope and easily revoked.
+
 ### 3.1 Exercise: Configuring Credentials in EDA
 
 1.  **In the EDA UI (within AAP), go to Automation Desicions -> Infrastrucutre -> Credentials, and create the following:**
@@ -16,16 +39,16 @@
         * User: `admin`.
         * Get Password: `oc get secret <instance-name>-controller-admin-password -o jsonpath='{.data.password}' | base64 --decode`
     * **Git Repo Credential:**
-        * Name: `GitLab/GitHub Credential`
+        * Name: `GitHub Credential`
         * Type: `Source Control`
-        * Username: ?????????
-        * Token: ??????????????
+        * Username: Your GitHub username (from section 3.0)
+        * Password/Token: Your GitHub Personal Access Token (from section 3.0)
     
 ### 3.2 Exercise: Creating the Project in EDA
 
 1.  Go to `Projects` -> `Create project`.
 2.  Name: `OpenShift Alerting Project`.
-3.  Point to your forked Git repository URL and select your Git credential.
+3.  Point to your forked Git repository URL and select the `GitHub Credential` you created in section 3.1.
 4.  Click `Save` and wait for the project to sync.
 
 ### 3.3 Exercise: Referencing the Decision Environment
