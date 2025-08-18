@@ -95,8 +95,8 @@ Before creating the Rulebook Activation, you need to configure the Decision Envi
 **Git Repo Credential:**
   * Name: `GitLab/GitHub Credential`
   * Type: `Source Control`
-  * Username: ?????????
-  * Token: ??????????????
+  * Username: Your GitHub username (from section 3.0)
+  * Password/Token: Your GitHub Personal Access Token (from section 3.0)
 
 **OpenShift Cluster Credential:**
 1. Create a new Credential Type for OpenShift (`openshift_api_url`, `openshift_token`):
