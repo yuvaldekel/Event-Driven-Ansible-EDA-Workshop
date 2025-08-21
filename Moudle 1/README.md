@@ -24,8 +24,8 @@ Event-Driven Ansible (EDA) is a component of the Ansible Automation Platform tha
 
 1.  **Log in to the OpenShift Cluster and create an aap Namespace** with a cluster-admin user.
 ```
-OCP_URL=""
-ADMIN_PASSWORD=""
+OCP_URL="<GET FROM INSTRATCTOR>"
+ADMIN_PASSWORD="<GET FROM INSTRATCTOR>"
 oc login -u admin -p ${ADMIN_PASSWORD} ${OCP_URL}
 oc create ns aap
 ```
