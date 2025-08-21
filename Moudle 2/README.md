@@ -1,5 +1,49 @@
 ## Module 2: Lab Setup and Configuration
 
+### 2.0 Exercise: Fork and Clone the Workshop Repository
+
+Before we begin setting up our Event-Driven Ansible lab environment, you'll need to fork and clone this repository to your own GitHub account. This will give you a personal copy of the workshop materials that you can modify and push changes to.
+
+1.  **Fork the Repository:**
+    * Navigate to the original workshop repository on GitHub: [Event-Driven-Ansible-EDA-Workshop](https://github.com/your-org/Event-Driven-Ansible-EDA-Workshop)
+    * Click the **"Fork"** button in the top-right corner of the repository page
+    * This creates a copy of the repository under your GitHub account
+
+2.  **Clone Your Forked Repository:**
+    * Copy the clone URL from your forked repository (use HTTPS or SSH based on your preference)
+    * Open a terminal on your local machine and run:
+        ```bash
+        git clone https://github.com/YOUR-USERNAME/Event-Driven-Ansible-EDA-Workshop.git
+        ```
+    * Replace `YOUR-USERNAME` with your actual GitHub username
+
+3.  **Navigate to the Repository Directory:**
+    ```bash
+    cd Event-Driven-Ansible-EDA-Workshop
+    ```
+
+4.  **Verify the Repository Structure:**
+    * List the contents to ensure you have all the module directories:
+        ```bash
+        ls -la
+        ```
+    * You should see directories for all workshop modules (Module 0, Module 1, Module 2, etc.)
+
+5.  **Configure Git (if not already done):**
+    * Set your Git username and email if you haven't already:
+        ```bash
+        git config --global user.name "Your Name"
+        git config --global user.email "your.email@example.com"
+        ```
+
+**Why Fork and Clone?**
+* **Personal Workspace**: You'll have your own copy to experiment with and modify
+* **Version Control**: All your changes will be tracked and can be pushed to your repository
+* **AAP Integration**: Later in the workshop, Ansible Automation Platform will pull your code from your forked repository
+* **Collaboration**: You can share your customized setup with others or contribute back to the original project
+
+**Important Note**: Make sure to use your forked repository URL when configuring Ansible Automation Platform in later modules, as AAP will need to pull the rulebooks and playbooks you'll be creating and modifying.
+
 ### 2.1 Exercise: Git Repository Structure
 
 A well-organized Git repository is crucial for a scalable and maintainable automation project. EDA and AAP expect a certain structure to locate all the necessary components like rulebooks, playbooks, and variables.
