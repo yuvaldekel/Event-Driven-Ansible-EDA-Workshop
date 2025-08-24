@@ -73,7 +73,7 @@ Before creating the Rulebook Activation, you need to configure the Decision Envi
 3.  Project: `OpenShift Alerting Project`.
 4.  Rulebook: `extensions/eda/rulebooks/rulebook.yml`.
 5.  Decision Environment: Select `EDA Decision Environment` (the Red Hat pre-built image configured in the previous section).
-6.  Log Level: `Error`.
+6.  Log Level: `Debug`.
 7.  Service Name: `alertmanager-listener`. #Same as the one we configured in the Route.
 8.  Credential: `AAP Controller Credential`.
 9.  Rulebook activation enabled? `Marked V`.
