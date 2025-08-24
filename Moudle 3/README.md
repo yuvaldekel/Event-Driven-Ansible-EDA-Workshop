@@ -95,18 +95,11 @@ Before creating the Rulebook Activation, you need to configure the Decision Envi
 13.  **Testing**
     * Run the following `CURL` command to check for the validity of the rulebook.
       ```bash
-      curl -x POST https://$ROUTE/alerts \
-      -H 'Content-Type: application/json' \
-      -d '{"alerts": 
-            [
-              {"annotations": {"description": "Workshop!!"},
-               "labels": {"alertname": "test",
-                          "env": "test",
-                          "severity: "critical"},
-                "status": "firing"
-              }
-            ]
-          }
+      curl -X POST https://$ROUTE/alerts -H 'Content-Type: application/json' -d '{"alerts":[{"annotations":{"description":"Workshop!"},
+         "labels":{"alertname":"test",
+                   "env":"dev",
+                   "severity":"custom"},
+         "status":"firing"}]}'
       ```
      * See in the rulebook activation history the data of your CURL command.
 
