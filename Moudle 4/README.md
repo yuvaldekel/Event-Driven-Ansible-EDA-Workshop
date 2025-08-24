@@ -1,4 +1,4 @@
-## Module 4: Triggering and Observing the Automation
+    ## Module 4: Triggering and Observing the Automation
 
 ### 4.1 Exercise: Configure Global Alert Labeling
 
@@ -42,15 +42,14 @@
 
 ### 4.3 Exercise: Generating a Test Alert
 
-1.  **Create a file named `node-health-alert-rule.yml`** with the `NodeHealthCheckFailed` rule.
+1.  **Edit the file named `extensions/eda/k8s-objects/test-prometheus-rule.yml`** with the worker node from the cluster you want the automation to reboot.
 2.  **Apply the rule:**
     ```bash
-    oc apply -f node-health-alert-rule.yml
+    oc apply -f extensions/eda/k8s-objects/test-prometheus-rule.yml
     ```
 3.  **Save your test alert to Git (Optional but good practice):**
     ```bash
     # Move the file into your repo structure
-    mv node-health-alert-rule.yml extensions/eda/k8s-objects/
     git add .
     git commit -m "Add test alert for node health"
     git push
