@@ -10,7 +10,7 @@ Before configuring credentials in AAP, you need to create a Personal Access Toke
     * Click **Generate new token** → **Generate new token (classic)**
     * Configure the token:
         * **Note**: `AAP EDA Workshop Token`
-        * **Expiration**: `30 days` (or as per your security policy)
+        * **Expiration**: `7 days` (or as per your security policy)
         * **Select scopes**: Check the following permissions:
             - `repo` (Full control of private repositories)
             - `workflow` (Update GitHub Action workflows)
@@ -46,32 +46,29 @@ Before configuring credentials in AAP, you need to create a Personal Access Toke
     
 ### 3.2 Exercise: Creating the Project in EDA
 
-1.  Go to `Projects` -> `Create project`.
+1.  Go to `Automation Decisions` -> `Projects` -> `Create project`.
 2.  Name: `OpenShift Alerting Project`.
 3.  Point to your forked Git repository URL and select the `GitHub Credential` you created in section 3.1.
 4.  Source Control branch: `main`.
-5.  Click `Save` and wait for the project to sync.
+5.  Unmark `Validae SSL`.
+6.  Click `Save` and wait for the project to sync.
 
 ### 3.3 Exercise: Referencing the Decision Environment
 
 Before creating the Rulebook Activation, you need to configure the Decision Environment that will execute your Event-Driven Ansible rulebooks.
 
-1.  **Navigate to Decision Environments in AAP:**
-    * In the AAP UI, go to **Administration** → **Execution Environments**
-    * Click **Add** to create a new execution environment
-
-2.  **Configure the Red Hat Decision Environment:**
-    * **Name**: `EDA Decision Environment`
-    * **Image**: `registry.redhat.io/ansible-automation-platform-25/de-supported-rhel9`
-    * **Description**: `Red Hat supported Decision Environment for Event-Driven Ansible`
-    * **Pull Policy**: `Always` (recommended for production)
-    * **Credential**: Reference the `Image Registry Credential` we've generated in step `3.1`
+1. Go to `Automation Decisions` -> `Decision Environment` -> `Create new`.
+2. **Name**: `EDA Decision Environment`
+3. **Image**: `registry.redhat.io/ansible-automation-platform-25/de-supported-rhel9:latest`
+4. **Description**: `Red Hat supported Decision Environment for Event-Driven Ansible`
+5. **Credential**: Leave Empty # (registry.redhat.io is publicly available. In your prod network, you'll reference your registry creds)
+6. Click `Create`.
 
 **Important**: This decision environment will be used in the next section when creating your Rulebook Activation.
 
 ### 3.4 Exercise: Creating the Rulebook Activation
 
-1.  Go to `Rulebook Activations` -> `Create rulebook activation`.
+1.  Go to `Automation Decisions` -> `Rulebook Activations` -> `Create rulebook activation`.
 2.  Name: `alertmanager-listener`
 3.  Project: `OpenShift Alerting Project`.
 4.  Rulebook: `extensions/eda/rulebooks/rulebook.yml`.
@@ -168,8 +165,10 @@ Before creating the Rulebook Activation, you need to configure the Decision Envi
 
 1.  Go to `Authentication Execution` -> `Projects` -> `Create project`.
 2.  Name: `OpenShift Automations`.
-3.  Point to your forked Git repository URL and select your Git credential.
-4.  Click `Save` and wait for the project to sync.
+3.  Point to your forked Git repository URL and select your Git credentials.
+4.  Branch: `main`
+5.  Unmark `Validae SSL`.
+6.  Click `Save` and wait for the project to sync.
 
 ### 3.7 Exercise: Creating a project template in AAP
 
