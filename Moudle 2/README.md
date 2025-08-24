@@ -101,7 +101,7 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         apiVersion: route.openshift.io/v1
         kind: Route
         metadata:
-          name: eda-webhook-route
+          name: alertmanager-listener
           namespace: <aap-namespace> # <-- IMPORTANT: Set this to your AAP namespace
         spec:
           to:
