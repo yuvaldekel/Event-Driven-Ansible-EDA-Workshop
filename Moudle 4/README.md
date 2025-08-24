@@ -2,7 +2,7 @@
 
 ### 4.1 Exercise: Configure Global Alert Labeling
 
-1.  **Create a file named `cluster-monitoring-config.yml`** with the following content:
+1.  **Create a file named `extentions/eda/k8s-objects/cluster-monitoring-config.yml`** with the following content:
     ```yaml
     apiVersion: v1
     kind: ConfigMap
@@ -17,7 +17,7 @@
     ```
 2.  **Apply the ConfigMap to your cluster:**
     ```bash
-    oc apply -f cluster-monitoring-config.yml
+    oc apply -f extentions/eda/k8s-objects/cluster-monitoring-config.yml
     ```
 
 ### 4.2 Exercise: Configuring OpenShift Alertmanager
