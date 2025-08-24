@@ -2,7 +2,7 @@
 
 ### 4.1 Exercise: Configure Global Alert Labeling
 
-1.  **Create a file named `extentions/eda/k8s-objects/cluster-monitoring-config.yml`** with the following content:
+1.  **Create a file named `extensions/eda/k8s-objects/cluster-monitoring-config.yml`** with the following content:
     ```yaml
     apiVersion: v1
     kind: ConfigMap
@@ -13,7 +13,7 @@
       config.yaml: |
         prometheusK8s:
           externalLabels:
-            env: prd # Or 'dev', depending on the cluster
+            env: dev # Or 'prd', depending on the cluster
     ```
 2.  **Apply the ConfigMap to your cluster:**
     ```bash
