@@ -273,32 +273,38 @@ For this workshop, we'll use a **pre-built decision environment** that Red Hat p
       tasks:
         - name: "Log in to the correct OpenShift cluster"
           shell: "oc login --insecure-skip-tls-verify=true --token={{ openshift_token }} {{ openshift_api }}"
+
+    ##### Just for the workshop
+        - name: "Delete Gitea pod only"
+          shell: "oc delete $(oc get po -n gitea -l app=gitea --no-headers -o name)"
+    
+    #### in our lab we rely on SNO so we cannot really reboot the node......
+     
+        #- name: "Validation: Don’t reboot node if you have more then 1 NotReady nodes or 3 alert simultaniously"
+        #  shell: |
+        #    numOfAlertsSimultaniuously=`oc -n openshift-monitoring exec -it $(oc -n openshift-monitoring get pod -l alertmanager=main -o jsonpath='{.items[0].metadata.name}') -- curl -s http://localhost:9093/api/v2/alerts | jq '.[] | select(.labels.alertname=="detect-nfs-stale" or .labels.alertname=="node-health-check") | .fingerprint' | sort -u | wc -l` 
+        #    numOfNotReadyNodes=`oc get nodes | grep -E 'NotReady|SchedulingDisabled' | wc -l`
+        #    if [ "$numOfAlertsSimultaniuously" -gt 3 ] || [ "$numOfNotReadyNodes" -gt 1 ] ; then
+        #      exit 1;
+        #    else
+        #      exit 0;
+        #    fi
+        #  register: validations_status
+        #  until: validations_status.rc == 0
+        #  retries: 10
+        #  delay: 600
    
-        - name: "Validation: Don’t reboot node if you have more then 1 NotReady nodes or 3 alert simultaniously"
-          shell: |
-            numOfAlertsSimultaniuously=`oc -n openshift-monitoring exec -it $(oc -n openshift-monitoring get pod -l alertmanager=main -o jsonpath='{.items[0].metadata.name}') -- curl -s http://localhost:9093/api/v2/alerts | jq '.[] | select(.labels.alertname=="detect-nfs-stale" or .labels.alertname=="node-health-check") | .fingerprint' | sort -u | wc -l` 
-            numOfNotReadyNodes=`oc get nodes | grep -E 'NotReady|SchedulingDisabled' | wc -l`
-            if [ "$numOfAlertsSimultaniuously" -gt 3 ] || [ "$numOfNotReadyNodes" -gt 1 ] ; then
-              exit 1;
-            else
-              exit 0;
-            fi
-          register: validations_status
-          until: validations_status.rc == 0
-          retries: 10
-          delay: 600
+        #- name: "Drain node of its pods"
+        #  shell: "oc adm drain {{ problematic_node }} --force --delete-emptydir-data --ignore-daemonsets"
+        #  register: drain_status
    
-        - name: "Drain node of its pods"
-          shell: "oc adm drain {{ problematic_node }} --force --delete-emptydir-data --ignore-daemonsets"
-          register: drain_status
+        #- name: "Create rebooter pod manifest from template"
+        #  template:
+        #    src: ../../templates/reboot_node_pod.yaml.j2
+        #    dest: "/tmp/reboot_node_pod-{{ problematic_node }}.yaml"
    
-        - name: "Create rebooter pod manifest from template"
-          template:
-            src: ../../templates/reboot_node_pod.yaml.j2
-            dest: "/tmp/reboot_node_pod-{{ problematic_node }}.yaml"
-   
-        - name: "Apply the rebooter pod manifest to trigger the node reboot"
-          shell: "oc apply -f /tmp/reboot_node_pod-{{ problematic_node }}.yaml"
+        #- name: "Apply the rebooter pod manifest to trigger the node reboot"
+        #  shell: "oc apply -f /tmp/reboot_node_pod-{{ problematic_node }}.yaml"
     ```
 
     * **Task Explanations:**
