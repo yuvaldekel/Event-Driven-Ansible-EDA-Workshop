@@ -272,7 +272,7 @@ For this workshop, we'll use a **pre-built decision environment** that Red Hat p
    
       tasks:
         - name: "Log in to the correct OpenShift cluster"
-          shell: "oc login --insecure-skip-tls-verify=true --token={{ openshift_token }} {{ openshift_api }}"
+          shell: "oc login --insecure-skip-tls-verify=true --token={{ openshift_token }} --server={{ openshift_api }}"
 
     ##### Just for the workshop
         - name: "Delete Gitea pod only"
