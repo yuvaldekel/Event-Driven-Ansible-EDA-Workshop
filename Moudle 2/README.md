@@ -277,7 +277,9 @@ For this workshop, we'll use a **pre-built decision environment** that Red Hat p
     ##### Just for the workshop
         - name: "Delete Gitea pod only"
           shell: "oc delete $(oc get po -n gitea -l app=gitea --no-headers -o name)"
-    
+
+        - name: "Print alert label"
+          shell: "echo {{ problematic_node }}"
     #### in our lab we rely on SNO so we cannot really reboot the node......
      
         #- name: "Validation: Don’t reboot node if you have more then 1 NotReady nodes or 3 alert simultaniously"
