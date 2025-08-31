@@ -267,7 +267,7 @@ For this workshop, we'll use a **pre-built decision environment** that Red Hat p
           when: payload.labels is defined and item in payload.labels
    
         - name: "Include vars file for the target environment"
-          include_vars: ../../vars/{{ payload.labels.env }}.yml
+          include_vars: "{{ payload.labels.env }}.yml"
    
       tasks:
         - name: "Log in to the correct OpenShift cluster"
