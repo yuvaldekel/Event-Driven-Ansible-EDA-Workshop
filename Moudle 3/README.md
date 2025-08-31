@@ -25,7 +25,7 @@ Before configuring credentials in AAP, you need to create a Personal Access Toke
 
 ### 3.1 Exercise: Configuring Credentials in EDA
 
-1.  **In the EDA UI (within AAP), go to Automation Desicions -> Infrastrucutre -> Credentials, and create the following:**
+1.  **In the EDA UI (within AAP), go to Automation Decisions -> Infrastructure -> Credentials, and create the following:**
     * **Image Registry Credential:**
         * Name: `Red Hat Registry Credential`
         * Type: `Container Registry`
@@ -150,6 +150,7 @@ Before creating the Rulebook Activation, you need to configure the Decision Envi
     * Type Details:
       * DEV OCP API Endpoint: `<https://dev_URL:6443>`
       * DEV OCP Token of ServiceAccount aap-eda-sa in openshift-monitoring namespace: `<PRINT SAVED TOKEN FROM Module 2 HERE>`
+      > `echo $TOKEN`
       * PRD OCP API Endpoint: `<https://prd_URL:6443>`
       * PRD OCP Token of ServiceAccount aap-eda-sa in openshift-monitoring namespace: `<PRINT SAVED TOKEN FROM Module 2 HERE>`
 
