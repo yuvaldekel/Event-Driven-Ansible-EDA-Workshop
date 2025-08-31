@@ -90,7 +90,7 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         ```
     4.  **Generate a Token for the Service Account**:
         ```bash
-        oc create token aap-eda-sa -n openshift-monitoring --duration=$((365*24))
+        oc create token aap-eda-sa -n openshift-monitoring --duration=$((365*24))h
         ```
     The output is a `sha256~...` token. Copy it and save it in a file for a later use in the next moudle.
     
