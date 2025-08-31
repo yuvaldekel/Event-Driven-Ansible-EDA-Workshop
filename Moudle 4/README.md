@@ -17,7 +17,7 @@
     ```
 2.  **Apply the ConfigMap to your cluster:**
     ```bash
-    oc apply -f extentions/eda/k8s-objects/cluster-monitoring-config.yml
+    oc apply -f extensions/eda/k8s-objects/cluster-monitoring-config.yml
     ```
 
 ### 4.2 Exercise: Configuring OpenShift Alertmanager
