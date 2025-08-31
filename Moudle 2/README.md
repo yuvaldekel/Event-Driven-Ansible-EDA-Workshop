@@ -58,13 +58,13 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         ```
 
 2.  **Create the environment variable files:**
-    * Using your text editor, create a new file at `vars/prd.yml` and add the following content, replacing the values with your **production** cluster details:
+    * Using your text editor, create a new file at `extensions/eda/playbooks/vars/prd.yml` and add the following content, replacing the values with your **production** cluster details:
         ```yaml
         ---
         openshift_api: "{{ lookup('env', 'PRD_OCP_API') }}"
         openshift_token: "{{ lookup('env', 'PRD_OCP_AUTH_TOKEN') }}"
         ```
-    * Create another file at `vars/dev.yml` with your **development** cluster details:
+    * Create another file at `extensions/eda/playbooks/vars/dev.yml` with your **development** cluster details:
         ```yaml
         ---
         openshift_api: "{{ lookup('env', 'DEV_OCP_API') }}"
@@ -147,7 +147,7 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         * **For production scenarios**, refer to the real-world PrometheusRules and monitoring jobs described in the **Appendix** section below
 
 5.  **Create the Rebooter Pod Template:**
-    * Create a new file at `templates/reboot_node_pod.yaml.j2` and add the following content:
+    * Create a new file at `extensions/eda/playbooks/templates/reboot_node_pod.yaml.j2` and add the following content:
         ```yaml
         apiVersion: v1
         kind: Pod
