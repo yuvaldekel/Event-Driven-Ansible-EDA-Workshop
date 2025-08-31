@@ -27,16 +27,26 @@
      ```yaml
      ...
      receivers:
+     - name: Critical
+     - name: Default
+     - name: Watchdog
      - name: EDA
        webhook_configs:
-       - url: "https://<echo $ROUTE>/alerts"
-         send_resolved: false
-     ...
+         - url: >-
+             https://<echo $ROUTE>/alerts
+           send_resolved: false
      route:
+       ...
        routes:
+         - matchers:
+             - alertname = Watchdog
+           receiver: Watchdog
+         - matchers:
+             - severity = critical
+           receiver: Critical
          - receiver: EDA
-           match_re:
-             severity: custom
+           matchers:
+             - severity=~custom
            continue: true
      ```
 
