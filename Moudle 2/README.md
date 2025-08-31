@@ -53,9 +53,8 @@ A well-organized Git repository is crucial for a scalable and maintainable autom
         ```bash
         mkdir -p extensions/eda/k8s-objects
         mkdir -p extensions/eda/playbooks
+        mkdir -p extensions/eda/playbooks/{templates,vars}
         mkdir -p extensions/eda/rulebooks
-        mkdir -p templates
-        mkdir -p vars
         ```
 
 2.  **Create the environment variable files:**
