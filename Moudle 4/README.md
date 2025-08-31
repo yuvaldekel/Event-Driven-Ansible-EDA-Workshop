@@ -34,7 +34,7 @@
      ...
      route:
        routes:
-         - reciever: EDA
+         - receiver: EDA
            match_re:
              severity: custom
            continue: true
