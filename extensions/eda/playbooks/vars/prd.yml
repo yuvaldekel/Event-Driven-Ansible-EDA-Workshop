@@ -1,0 +1,3 @@
+---
+openshift_api: "{{ lookup('env', 'PRD_OCP_API') }}"
+openshift_token: "{{ lookup('env', 'PRD_OCP_AUTH_TOKEN') }}"

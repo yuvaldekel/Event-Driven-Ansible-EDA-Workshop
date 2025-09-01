@@ -1,0 +1,18 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: dummy-prometheus-rule
+  namespace: openshift-monitoring
+spec:
+  groups:
+  - name: dummy-prometheus-rule
+    rules:
+    - alert: NodeHealthCheckFailed
+      annotations:
+        summary: event driven poc
+      expr: |
+        max(node_disk_info{instance=~"<worker-name>"}) by(instance)
+      for: 10s
+      labels:
+        severity: custom
