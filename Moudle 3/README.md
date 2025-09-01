@@ -34,7 +34,7 @@ Before configuring credentials in AAP, you need to create a Personal Access Toke
         * Token: No need, public registry
     * **AAP Controller Credential:**
         * Name: `AAP Controller Credential`
-        * Type: `Controller`
+        * Type: `Red Hat Ansible Automation Platform`
         * Host: `https://<URL of the AAP controller route>/api/controller/`
         * User: `admin`.
         * Get Password: `oc get secret <instance-name>-controller-admin-password -o jsonpath='{.data.password}' | base64 --decode`
